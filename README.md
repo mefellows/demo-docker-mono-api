@@ -9,13 +9,15 @@ Uses a local Vagrant Debian Wheezy box to build the linux artifact for embedding
 ```
 vagrant up
 vagrant ssh
-./build sh
+cd /vagrant && ./build.sh
 logout
 docker build -t mfellows/mono-api .
 docker run -d -p 8888:8888 mfellows/mono-api
 ```
 
-You can now hit your API on port `8888`:
+You can now hit your API on port `8888` (you may need to wait a minute for it to spin up: run `docker logs <container id>` and look for "started"):
+
+And there it is - a .NET API running in a ~20mb Docker container!
 
 ```
 curl $(boot2docker ip):8888
