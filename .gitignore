@@ -1,0 +1,11 @@
+*.exe
+*.dll
+packages
+*.out
+*.a
+*.o
+*.e
+bin
+obj
+.vagrant
+*.bak
