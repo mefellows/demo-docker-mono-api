@@ -1,8 +1,7 @@
 # Docker Mono .NET Demo 
-Example Nancy self-hosted API running on Mono, in a minimal Docker image.
+Example self-hosted [Nancy](http://nancyfx.org/) API running on Mono, in a minimal Docker image (< 20mb)
 
 Uses a local Vagrant Debian Wheezy box to build the linux artifact for embedding as a static binary in the Docker container.
-
 
 ## Getting Started
 *Note*: You will need [Vagrant](http://vagrantup.com) and [Virtualbox](http://virtualbox.org/) for this, or otherwise a working local Mono distribution on a Linux host.
@@ -14,6 +13,11 @@ vagrant ssh
 logout
 docker build -t mfellows/mono-api .
 docker run -d -p 8888:8888 mfellows/mono-api
+```
+
+You can now hit your API on port `8888`:
+
+```
 curl $(boot2docker ip):8888
 Hello World
 ```
