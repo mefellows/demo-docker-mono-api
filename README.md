@@ -9,20 +9,19 @@ Uses a local Vagrant Debian Wheezy box to build the linux artifact for embedding
 ```
 vagrant up
 vagrant ssh
-cd /vagrant && ./build.sh
-logout
-docker build -t mfellows/mono-api .
+cd /vagrant
+./build.sh
 docker run -d -p 8888:8888 mfellows/mono-api
 ```
 
 You can now hit your API on port `8888` (you may need to wait a minute for it to spin up: run `docker logs <container id>` and look for "started"):
 
-And there it is - a .NET API running in a ~20mb Docker container!
-
 ```
 curl $(boot2docker ip):8888
 Hello World
 ```
+
+And there it is - a .NET API running in a ~20mb Docker container!
 
 ## Performance
 As an interesting side note, it still performs quite well with no tuning. My host Mac OSX the running Virtualbox process sits around 5% CPU usage during this basic stress test.

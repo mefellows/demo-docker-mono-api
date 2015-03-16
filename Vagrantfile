@@ -12,7 +12,9 @@ Vagrant.configure(2) do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "pixative/debian-wheezy-64"
+  config.vm.box = "deb/jessie-amd64"
+
+  config.vbguest.auto_update = false
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -65,15 +67,22 @@ Vagrant.configure(2) do |config|
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
    config.vm.provision "shell", inline: <<-SHELL
-	 apt-get update \
-		&& apt-get install -y curl \
-		&& rm -rf /var/lib/apt/lists/*
-	
-	 apt-key adv --keyserver pgp.mit.edu --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
-	
-	 echo "deb http://download.mono-project.com/repo/debian wheezy/snapshots/3.12.0 main" > /etc/apt/sources.list.d/mono-xamarin.list \
-		&& apt-get update \
-		&& apt-get install -y mono-devel ca-certificates-mono fsharp mono-vbnc nuget \
-		&& rm -rf /var/lib/apt/lists/*
+    apt-get update
+    apt-get install -y curl
+    rm -rf /var/lib/apt/lists/*
+
+    apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
+
+    echo "deb http://download.mono-project.com/repo/debian wheezy/snapshots/3.12.0 main" > /etc/apt/sources.list.d/mono-xamarin.list
+    echo "deb http://ftp.debian.org/debian testing main"     >  /etc/apt/sources.list.d/debian-testing
+    echo "deb-src http://ftp.debian.org/debian testing main" >> /etc/apt/sources.list.d/debian-testing
+
+    apt-get update
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes mono-devel ca-certificates-mono fsharp mono-vbnc nuget docker.io
+    rm -rf /var/lib/apt/lists/*
+
+    sudo groupadd docker
+    sudo gpasswd -a vagrant docker
+    sudo service docker restart
    SHELL
 end
