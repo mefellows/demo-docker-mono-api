@@ -9,6 +9,7 @@ Uses a local Vagrant Debian Wheezy box to build the linux artifact for embedding
 ```
 vagrant up
 vagrant ssh
+sudo su
 cd /vagrant
 ./build.sh
 docker run -d -p 8888:8888 mfellows/mono-api

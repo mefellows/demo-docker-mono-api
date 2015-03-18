@@ -1,9 +1,6 @@
-#FROM debian:wheezy
-#ADD ./consoleapp console
-#CMD [ "./console" ]
+FROM mfellows/apibase
 
-# Much smaller...`
-FROM progrium/busybox
-RUN opkg-install libc-dev
-ADD ./consoleapp console
-CMD [ "./console" ]
+MAINTAINER Matt Fellows <matt.fellows@onegeek.com.au>
+
+ONBUILD WORKDIR /usr/src/app/build
+CMD [ "sleep", "600" ]

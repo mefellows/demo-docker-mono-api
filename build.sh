@@ -1,14 +1,10 @@
 #!/bin/bash
 
-nuget restore -NonInteractive
+# Run the 'CI' process in a bunch of Docker containers
+docker build -t mfellows/mono-api-base base
 
-PACKAGES_DIR=$(find ./packages/ -name *.dll)
-PACKAGES=""
+# Build the binary
+./build-binary.sh
 
-for f in $PACKAGES_DIR; do
-   PACKAGES="$PACKAGES $f"
-done
-
-xbuild /p:Configuration=Release ./console.sln
-mkbundle --deps --static ./obj/x86/Release/console.exe $PACKAGES -o consoleapp
-docker build -t mfellows/mono-api .
+# Build distributable container
+docker build -t mfellows/mono-api distribution
