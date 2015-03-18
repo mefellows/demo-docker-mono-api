@@ -11,4 +11,4 @@ done
 
 xbuild /p:Configuration=Release ./console.sln
 mkbundle --deps --static ./obj/x86/Release/console.exe $PACKAGES -o consoleapp
-sudo docker build -t mfellows/mono-api .
+docker build -t mfellows/mono-api .
