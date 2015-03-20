@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Run the 'CI' process in a bunch of Docker containers
-docker build -t mfellows/mono-api-base base
+# Build the base image
+docker build -t mefellows/mono-static base
 
-# Build the binary
+# Build the binary in a 'CI' process, and extract from container
 ./build-binary.sh
 
-# Build distributable container
+# Build distributable container from new binary
 docker build -t mfellows/mono-api distribution

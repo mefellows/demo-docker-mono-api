@@ -1,4 +1,4 @@
-FROM mfellows/apibase
+FROM mefellows/mono-static
 
 MAINTAINER Matt Fellows <matt.fellows@onegeek.com.au>
 
