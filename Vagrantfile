@@ -15,9 +15,10 @@ Vagrant.configure(2) do |config|
   config.vm.network "forwarded_port", guest: 2375, host: 2376, host_ip: "127.0.0.1", id: "docker"
 
   config.vm.provision "shell", inline: <<-SHELL
+    echo "deb http://cdn.debian.net/debian unstable main" > /etc/apt/sources.list.d/unstable.list
     apt-get update
     apt-get install -y curl
-    rm -rf /var/lib/apt/lists/*
+    #rm -rf /var/lib/apt/lists/*
 
     # Mono - not currently required...
     # apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
@@ -35,5 +36,10 @@ Vagrant.configure(2) do |config|
     sudo groupadd docker
     sudo gpasswd -a vagrant docker
     sudo service docker restart
+   SHELL
+
+  config.vm.provision "shell", run: "always", inline: <<-SHELL
+	cd /vagrant/
+	./build.sh
    SHELL
 end
